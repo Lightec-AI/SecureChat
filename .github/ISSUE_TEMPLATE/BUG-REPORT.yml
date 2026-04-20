@@ -6,7 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        Thanks for taking the time to fill out this bug report! If the bug is related to Secure AI as developed by Lightec, please submit here. Otherwise, please follow LibreChat's process as detailed below.
+
         
         Before submitting, please:
         - Search existing [Issues and Discussions](https://github.com/danny-avila/LibreChat/discussions) to see if your bug has already been reported
