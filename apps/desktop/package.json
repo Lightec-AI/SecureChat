@@ -1,0 +1,17 @@
+{
+  "name": "@securechat/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Desktop wrapper for SecureChat",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "cross-env SECURECHAT_DESKTOP_URL=http://localhost:3080 electron .",
+    "build": "echo \"Desktop wrapper build is handled by electron-builder.\"",
+    "dist": "electron-builder --config electron-builder.yml --mac --win --linux"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  }
+}

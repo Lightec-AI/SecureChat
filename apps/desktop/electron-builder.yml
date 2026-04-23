@@ -1,0 +1,19 @@
+appId: ai.lightec.securechat.desktop
+productName: SecureChat
+directories:
+  output: dist
+  buildResources: build
+files:
+  - electron/**/*
+mac:
+  target:
+    - dmg
+    - zip
+win:
+  target:
+    - nsis
+    - portable
+linux:
+  target:
+    - AppImage
+    - deb

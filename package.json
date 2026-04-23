@@ -9,6 +9,10 @@
     "packages/*"
   ],
   "scripts": {
+    "desktop:postinstall": "npm --prefix apps/desktop install",
+    "desktop:dev": "npm --prefix apps/desktop run dev",
+    "desktop:build": "npm --prefix apps/desktop run build",
+    "desktop:dist": "npm --prefix apps/desktop run dist",
     "update": "node config/update.js",
     "add-balance": "node config/add-balance.js",
     "set-balance": "node config/set-balance.js",
