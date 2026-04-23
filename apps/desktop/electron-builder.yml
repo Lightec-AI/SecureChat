@@ -14,6 +14,9 @@ win:
     - nsis
     - portable
 linux:
+  maintainer: Lightec AI <support@lightec.ai>
+  executableName: securechat
+  artifactName: "${name}-${version}-${arch}.${ext}"
   target:
     - AppImage
     - deb

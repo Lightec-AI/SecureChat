@@ -1,8 +1,13 @@
 {
-  "name": "@securechat/desktop",
+  "name": "securechat-desktop",
   "version": "0.1.0",
   "private": true,
   "description": "Desktop wrapper for SecureChat",
+  "homepage": "https://github.com/Lightec-AI/SecureChat",
+  "author": {
+    "name": "Lightec AI",
+    "email": "support@lightec.ai"
+  },
   "main": "electron/main.js",
   "scripts": {
     "dev": "cross-env SECURECHAT_DESKTOP_URL=http://localhost:3080 electron .",
