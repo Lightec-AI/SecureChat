@@ -1,0 +1,20 @@
+{
+  "name": "securechat-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mobile wrapper for SecureChat (iOS/iPadOS/Android)",
+  "scripts": {
+    "sync": "npx cap sync",
+    "android": "npx cap open android",
+    "ios": "npx cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "@capacitor/ios": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3",
+    "typescript": "^5.9.3"
+  }
+}
