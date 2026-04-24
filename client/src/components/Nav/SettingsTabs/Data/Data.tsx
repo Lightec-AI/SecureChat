@@ -7,6 +7,7 @@ import { DeleteCache } from './DeleteCache';
 import { RevokeKeys } from './RevokeKeys';
 import { ClearChats } from './ClearChats';
 import SharedLinks from './SharedLinks';
+import LocalConversationFiles from './LocalConversationFiles';
 import { useHasAccess } from '~/hooks';
 
 function Data() {
@@ -20,6 +21,9 @@ function Data() {
 
   return (
     <div className="flex flex-col gap-3 p-1 text-sm text-text-primary">
+      <div className="pb-3">
+        <LocalConversationFiles />
+      </div>
       <div className="pb-3">
         <ImportConversations />
       </div>
