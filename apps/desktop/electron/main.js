@@ -8,6 +8,28 @@ const SETTINGS_FILE = 'desktop-settings.json';
 let mainWindow = null;
 
 const getStartUrl = () => process.env.SECURECHAT_DESKTOP_URL || DEFAULT_URL;
+const getStartOrigin = () => {
+  try {
+    return new URL(getStartUrl()).origin;
+  } catch (_error) {
+    return new URL(DEFAULT_URL).origin;
+  }
+};
+const isSafeExternalUrl = (url) => {
+  try {
+    const parsed = new URL(url);
+    return ['https:', 'http:', 'mailto:'].includes(parsed.protocol);
+  } catch (_error) {
+    return false;
+  }
+};
+const isAllowedInAppNavigation = (url) => {
+  try {
+    return new URL(url).origin === getStartOrigin();
+  } catch (_error) {
+    return false;
+  }
+};
 
 const settingsPath = () => path.join(app.getPath('userData'), SETTINGS_FILE);
 
@@ -58,8 +80,26 @@ const createWindow = () => {
   mainWindow.loadURL(getStartUrl());
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
-    shell.openExternal(url);
+    if (isSafeExternalUrl(url)) {
+      shell.openExternal(url);
+    }
     return { action: 'deny' };
+  });
+
+  mainWindow.webContents.on('will-navigate', (event, url) => {
+    if (!isAllowedInAppNavigation(url)) {
+      event.preventDefault();
+      if (isSafeExternalUrl(url)) {
+        shell.openExternal(url);
+      }
+    }
+  });
+
+  mainWindow.webContents.session.setPermissionRequestHandler((_webContents, _permission, callback) =>
+    callback(false),
+  );
+  mainWindow.webContents.on('will-attach-webview', (event) => {
+    event.preventDefault();
   });
 };
 

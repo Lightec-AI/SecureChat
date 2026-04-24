@@ -44,6 +44,29 @@ const { PORT, HOST, ALLOW_SOCIAL_LOGIN, DISABLE_COMPRESSION, TRUST_PROXY } = pro
 const port = isNaN(Number(PORT)) ? 3080 : Number(PORT);
 const host = HOST || 'localhost';
 const trusted_proxy = Number(TRUST_PROXY) || 1; /* trust first proxy by default */
+const EXTRA_CSP_CONNECT_SRC = process.env.CSP_CONNECT_SRC || '';
+const CONNECT_SRC_DIRECTIVES = [
+  "'self'",
+  'https:',
+  'wss:',
+  'ws:',
+  ...EXTRA_CSP_CONNECT_SRC
+    .split(',')
+    .map((v) => v.trim())
+    .filter((v) => v.length > 0),
+];
+const CONTENT_SECURITY_POLICY = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https:",
+  "font-src 'self' data:",
+  "frame-src 'self'",
+  `connect-src ${CONNECT_SRC_DIRECTIVES.join(' ')}`,
+].join('; ');
 
 const app = express();
 
@@ -96,6 +119,15 @@ const startServer = async () => {
 
   /* Middleware */
   app.use(noIndex);
+  app.use((_req, res, next) => {
+    res.setHeader('Content-Security-Policy', CONTENT_SECURITY_POLICY);
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+    next();
+  });
   app.use(express.json({ limit: '3mb' }));
   app.use(express.urlencoded({ extended: true, limit: '3mb' }));
   app.use(handleJsonParseError);
